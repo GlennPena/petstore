@@ -6,11 +6,11 @@ spring:
       minimum-idle: 2
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: false
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+        # Let Spring auto-detect dialect for H2/Postgres
         format_sql: true
         jdbc:
           batch_size: 20
