@@ -10,6 +10,8 @@ spring:
     show-sql: false
     properties:
       hibernate:
+        hbm2ddl:
+          auto: update
         # Let Spring auto-detect dialect for H2/Postgres
         format_sql: true
         jdbc:
@@ -17,9 +19,6 @@ spring:
   flyway:
     enabled: false
   sql:
-            hibernate:
-              hbm2ddl:
-                auto: update
     init:
       mode: never
 
