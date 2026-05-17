@@ -1,5 +1,6 @@
 package com.pena.petstore.config;
 
+import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -12,11 +13,25 @@ public class CorsConfig implements WebMvcConfigurer {
 
   @Override
   public void addCorsMappings(CorsRegistry registry) {
-    registry.addMapping("/pena/**")
-        .allowedOrigins(allowedOrigins.split(","))
+    String[] origins = Arrays.stream(allowedOrigins.split(","))
+        .map(String::trim)
+        .toArray(String[]::new);
+
+    var mapping = registry.addMapping("/pena/**")
         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
         .allowedHeaders("*")
-        .allowCredentials(true)
+        .allowCredentials(false)
+        .maxAge(3600);
+
+    if (origins.length == 1 && "*".equals(origins[0])) {
+      mapping.allowedOriginPatterns("*");
+      return;
+    }
+
+    mapping.allowedOrigins(origins)
+        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+        .allowedHeaders("*")
+        .allowCredentials(false)
         .maxAge(3600);
   }
 }

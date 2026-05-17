@@ -2,6 +2,7 @@ package com.pena.petstore.api;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
@@ -18,9 +19,7 @@ class RootControllerTest {
   @Test
   void returnsServiceStatusAtRoot() throws Exception {
     mockMvc.perform(get("/"))
-        .andExpect(status().isOk())
-        .andExpect(jsonPath("$.service").value("petstore-backend"))
-        .andExpect(jsonPath("$.status").value("ok"))
-        .andExpect(jsonPath("$.catalog").value("/pena/pets"));
+        .andExpect(status().isFound())
+        .andExpect(header().string("Location", "/pena/pets"));
   }
 }
