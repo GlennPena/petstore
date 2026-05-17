@@ -17,6 +17,9 @@ spring:
   flyway:
     enabled: false
   sql:
+            hibernate:
+              hbm2ddl:
+                auto: update
     init:
       mode: never
 
